@@ -1,0 +1,22 @@
+mat-form-field{
+    width:100%;
+}
+.btn_upload {
+    display: inline-block;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 10px;
+    width: 166px;
+    height: 46px;
+    background: #FFFFFF;
+    /* border: 1.2px solid #E31D1A !important; */
+    border-radius: 100px;
+}
+
+.btn_upload input {
+    display: none;
+}

@@ -1,29 +1,9 @@
-<header>
-    <div class="admin_pannelBox">
-        <article>
-            <img src="assets/images/adminImg.png">
-        </article>
-        <div class="admin_info">
-         <div class="dropdown">
-           <button class="dropbtn">Austin Robertson</button>
-           <div class="input-group rounded">
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-              aria-describedby="search-addon" 
-              style="border-radius: 25px; border: none;" />
-          </div>
-          <div class="col-5">
-            <div class="add_btn_sec">
-              <button class="add_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <img src="assets/images/Add.png">
-                <span>ADD NEW TASKS</span>
-              </button>
-            </div>
-          </div>
-         </div>
-           <div class="text">
-             <span>Administrator</span>
-           </div>
-        </div>
-    </div>
- </header>
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+   <mat-icon>supervised_user_circle</mat-icon>
+  </button>
+  <span>Assignment</span>
+  <span class="example-spacer"></span>
  
+  <button mat-raised-button color="warn" (click)="openDialog()">ADD TASKS</button>
+</mat-toolbar>
