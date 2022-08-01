@@ -1,39 +1,44 @@
 <h1 mat-dialog-title>Add Tasks</h1>
 <div mat-dialog-content>
-    <div class="btn_upload">
-    <button mat-raised-button type="button" >
-        <img src="assets/images/plus.png"><span class="upImg">
-            Upload
-            Image</span>
-    </button>
-    </div>
-    <div>
-    <mat-form-field appearance="outline">
-        <mat-label>Title of Task</mat-label>
-        <input matInput placeholder="Task">       
-      </mat-form-field>
+   <form [formGroup]="TodoTasksForm" >   
+      <button mat-raised-button class="btn_upload" type="button"  (click)="openImagePopUp()">
+          <img src="assets/images/plus.png"><span class="upImg">
+              Upload
+              Image</span>
+      </button>
+      <div class="upload-inner-wrap">
+      <!-- <input matInput formControlName="images" placeholder="Task"> -->
+      <input type="file" style="display: none; margin-left: 20px;"
+      name="uploadImageUrl" id="uploadImageUrl" formControlName="images" multiple >
+      </div> 
+      <div>
       <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <input matInput placeholder="Description">       
-      </mat-form-field>      
-      <mat-form-field appearance="outline">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Status</mat-label>
-        <mat-select placeholder="Status">
-             <mat-option value="Todo">Todo</mat-option>
-             <mat-option value="In-Progress">In-Progress</mat-option>
-             <mat-option value="Done">Done</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+          <mat-label>Title of Task</mat-label>
+          <input matInput formControlName="title" placeholder="Task">       
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" placeholder="Description">       
+        </mat-form-field>      
+        <mat-form-field appearance="outline">
+          <mat-label>Choose a date</mat-label>
+          <input matInput formControlName="date" [matDatepicker]="picker">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status" placeholder="Status">
+               <mat-option value="Todo">Todo</mat-option>
+               <mat-option value="In-Progress">In-Progress</mat-option>
+               <mat-option value="Done">Done</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+   </form>
 </div>
 <div mat-dialog-actions [align]="'end'">
-   <button mat-raised-button color="warm" mat-dialog-close>Cancel</button>
-   <button mat-raised-button color="primary">Save</button>
+   <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+   <button mat-raised-button color="primary" (click)="addTasks()">Save</button>
 </div>
