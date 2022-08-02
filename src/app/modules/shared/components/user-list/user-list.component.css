@@ -5,8 +5,8 @@
 table {
     
     width: 100%;
-    overflow: auto;
-    max-height: 1000px;
+    overflow: auto;    
+    height: 60vh;
   }
   
   .mat-form-field {
@@ -17,10 +17,16 @@ table {
     width: 62px;
   }
   .container{
-    max-width: 1500px;
-   
-    margin: auto;
-   
+    max-width: 1500px;   
+    margin: auto;   
   }
  
+  .mat-paginator{
+    font-size: 1rem;
+  } 
+  ::ng-deep .mat-select-value{
+    font-size: 20px !important;
+    
+  }
+  
   
