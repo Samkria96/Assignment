@@ -1,9 +1,36 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpService } from './httpshared.service';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsertasksService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private httpService: HttpService
+  ) { }
+
+  createTodo(data:any){
+    return this.httpService.post('admin/todo/create-todo',data)
+  }
+
+  todoListing(page: any, limit: any){
+    return this.httpService.get(`admin/todo/?page=${page}&limit=${limit}`)
+  }
+
+  editTodo(data :any ,_id:any){
+    return this.httpService.put(`admin/todo/${_id}`,data)
+  }
+
+  viewTodo(_id:any , data :any ){
+    return this.httpService.get(`admin/todo/${_id}`,data)
+  }   
+
+  deleteTodo(_id:any){
+    return this.httpService.delete(`admin/todo/${_id}`)
+  }
 }

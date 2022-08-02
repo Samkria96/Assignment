@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class DialogComponent implements OnInit {
     
   images : any = [];
+  actionBtn : string = 'Save' 
 
   TodoTasksForm = this.fb.group({
     images:[''],
@@ -23,7 +24,9 @@ export class DialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
   }
+
    
   addTasks(){
    console.log(this.TodoTasksForm.value) 
