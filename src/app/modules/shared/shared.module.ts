@@ -18,6 +18,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {UserListComponent } from './components/user-list/user-list.component';
 import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -43,7 +44,8 @@ import {MatTableModule} from '@angular/material/table';
     MatNativeDateModule ,
     MatPaginatorModule ,
     MatSortModule, 
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ],
   
   exports:[

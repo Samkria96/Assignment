@@ -1,6 +1,6 @@
-.example-spacer{
+/* .example-spacer{
     flex: 1 1 auto;
-}
+} */
 
 table {
     
@@ -14,7 +14,7 @@ table {
     width: 100%;
   }
   .showimg{
-    width: 62px;
+    width: 140px;
   }
   .container{
     max-width: 1500px;   

@@ -1,11 +1,11 @@
 import { Component, OnInit , ViewChild ,AfterViewInit} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UsertasksService } from 'src/app/services/usertasks.service';
 import { environment } from 'src/environments/environment.prod';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-list',
@@ -20,6 +20,9 @@ export class UserListComponent implements AfterViewInit , OnInit {
   currentPage: any;
   count: any;
   p: number = 1;
+  totalPage:any;
+  actionBtn:string = 'Save'
+ 
 
 
   displayedColumns: string[] = ['image', 'title', 'description', 'target-date','status','action'];
@@ -31,7 +34,8 @@ export class UserListComponent implements AfterViewInit , OnInit {
 
   constructor(
     private dialog:MatDialog,
-    private userTasksService : UsertasksService
+    private userTasksService : UsertasksService,
+    private matSnackBar: MatSnackBar,
    ) 
   {}     
   
@@ -55,6 +59,7 @@ export class UserListComponent implements AfterViewInit , OnInit {
         this.previousPage = res?.data?.prevPage;
         this.count = res?.data?.totalDocs;
         this.currentPage = res?.data?.page;
+        this.totalPage = res?.data?.totalPages
       },
       (err) => {
         console.log(err);
@@ -68,9 +73,8 @@ export class UserListComponent implements AfterViewInit , OnInit {
       this.p = event;
       this.todoListing(this.p, 10);
     }
-  
 
-
+    
   applyFilter(event: Event) {
     // const filterValue = (event.target as HTMLInputElement).value;
     // this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -80,11 +84,35 @@ export class UserListComponent implements AfterViewInit , OnInit {
     // }
   }
 
-  editTasks(row:any){
+  editTodo(row:any){
+    
     this.dialog.open(DialogComponent,{
     height: 'auto',
       width: 'auto',
       data:row
   })
+  }
+
+
+  deleteTasks(id:any){
+    this.userTasksService.deleteTodo(id).subscribe(
+    {
+       next:(res)=>{
+        this.matSnackBar.open(
+          'Delete Tasks Successfully.',
+          'Ok',
+          {duration: 2500,}          
+        );
+        this.todoListing(1, 10);
+       },
+        error:()=>{
+          this.matSnackBar.open(
+            'Some Issues To Delete Task.',
+            'Ok',
+            {duration: 2500,}
+          );
+        }
+       
+    })
   }
 }
