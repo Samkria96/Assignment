@@ -1,18 +1,19 @@
-<h1 mat-dialog-title>Add Tasks</h1>
+<h1 mat-dialog-title>{{showTitle}}</h1>
 <div mat-dialog-content>
    <form [formGroup]="TodoTasksForm" >   
-      <button mat-raised-button class="btn_upload" type="button"  (click)="openImagePopUp()">
+      <button mat-raised-button class="btn_upload" type="button"  (click)="img.click()">
           <img src="assets/images/plus.png"><span class="upImg" >
               Upload
               Image</span>
       </button>
       <div class="upload-inner-wrap">
       <!-- <input matInput formControlName="images" placeholder="Task"> -->
-      <input type="file" style="display: none; margin-left: 20px;"
-      name="uploadImageUrl" id="uploadImageUrl" formControlName="image" (click)="getImages($event)" >
+      <input type="file" #img style="display: none; margin-left: 20px;"
+         id="my-input" formControlName="image" (change)="getImages($event)" >
       <div class="uploadImg_common" >
         <img [src]="imageSrc" *ngIf="imageSrc"  >
-        <mat-icon (click)="deleteImage(0,1)">highlight_off</mat-icon>
+        <mat-icon class="mat-icon-highlight_off" *ngIf="imageSrc" (click)="deleteImage(0,1)">highlight_off</mat-icon>
+        <mat-icon *ngIf="!imageSrc"></mat-icon>
     </div>
       </div> 
       <div>
@@ -44,6 +45,6 @@
 </div>
 <div mat-dialog-actions [align]="'end'">
    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-   <button *ngIf="!updateOne" mat-raised-button color="primary" (click)="createTodo()" >{{actionBtn}}</button>
+   <button *ngIf="!updateOne" mat-raised-button color="primary"  (click)="createTodo()" >{{actionBtn}}</button>
    <button *ngIf="updateOne" mat-raised-button color="primary" (click)="editTodo()" >{{actionBtn}}</button>
 </div>

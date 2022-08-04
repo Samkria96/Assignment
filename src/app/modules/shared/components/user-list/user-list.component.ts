@@ -1,11 +1,14 @@
-import { Component, OnInit , ViewChild ,AfterViewInit} from '@angular/core';
+import { Component, OnInit , ViewChild ,AfterViewInit ,inject} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { DialogComponent } from '../dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsertasksService } from 'src/app/services/usertasks.service';
 import { environment } from 'src/environments/environment.prod';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Dialog2Component } from '../dialog2/dialog2.component';
+import { Dialog3Component } from '../dialog3/dialog3.component';
+
 
 @Component({
   selector: 'app-user-list',
@@ -22,8 +25,9 @@ export class UserListComponent implements AfterViewInit , OnInit {
   p: number = 1;
   totalPage:any;
   actionBtn:string = 'Save'
- 
-
+  showTitle : string = 'Add Tasks ' 
+  $: any; 
+  searchValue:any;
 
   displayedColumns: string[] = ['image', 'title', 'description', 'target-date','status','action'];
 
@@ -36,22 +40,32 @@ export class UserListComponent implements AfterViewInit , OnInit {
     private dialog:MatDialog,
     private userTasksService : UsertasksService,
     private matSnackBar: MatSnackBar,
-   ) 
-  {}     
+  
+  )
+  {}   
+    
   
   baseImgUrl = environment.imageUrl;
 
   ngOnInit(): void {
-    this.todoListing(1, 10);
+    this.todoListing(1, 10,'');
   }
-  ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+  ngAfterViewInit() { }
+
+    addTask() {
+     const dialogRef =  this.dialog.open(DialogComponent, {
+       width:'auto',
+       height : 'auto'
+      });
+
+      dialogRef.afterClosed().subscribe((res:any) => {
+        this.todoListing(1,10, '')
+      })
   }
   
-  todoListing(page: number, limit: number){
+  todoListing(page: number, limit: number, search:string){
     console.log('hello');
-    this.userTasksService.todoListing(page, limit).subscribe(
+    this.userTasksService.todoListing(page, limit, search).subscribe(
       (res: any) => {
         console.log(res, 'data');
         this.todoData = res?.data?.docs;
@@ -71,21 +85,19 @@ export class UserListComponent implements AfterViewInit , OnInit {
     getPage(event: any) {
       console.log('event', event);
       this.p = event;
-      this.todoListing(this.p, 10);
-    }
-
-    
-  applyFilter(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
+      this.todoListing(1, 10, '');
+    }  
+   
+  
+  viewTodo(row:any ,id:any){
+    row.type='View Current Tasks'    
+    this.dialog.open(Dialog2Component,{
+      data:row 
+   })
   }
 
   editTodo(row:any){
-    
+    row.type='Edit Tasks'
     this.dialog.open(DialogComponent,{
     height: 'auto',
       width: 'auto',
@@ -93,26 +105,25 @@ export class UserListComponent implements AfterViewInit , OnInit {
   })
   }
 
-
-  deleteTasks(id:any){
-    this.userTasksService.deleteTodo(id).subscribe(
-    {
-       next:(res)=>{
-        this.matSnackBar.open(
-          'Delete Tasks Successfully.',
-          'Ok',
-          {duration: 2500,}          
-        );
-        this.todoListing(1, 10);
-       },
-        error:()=>{
-          this.matSnackBar.open(
-            'Some Issues To Delete Task.',
-            'Ok',
-            {duration: 2500,}
-          );
-        }
-       
-    })
+  searchtitle(e:any){
+    console.log(e.target.value,'value...');
+    this.searchValue = e.target.value;
+    this.todoListing(1, 10, this.searchValue)
   }
-}
+
+  deleteTasks(id:any){   
+    if(id){    
+      const dialogRef = this.dialog.open(Dialog3Component,{
+        height: 'auto',
+        width: 'auto',
+        data:id
+      })
+
+
+      dialogRef.afterClosed().subscribe((res:any) => {
+        this.todoListing(1, 10,'');
+      })
+    }
+  }
+  }
+   

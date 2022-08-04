@@ -3,7 +3,7 @@ import {CommonModule } from '@angular/common';
 
 import {SharedRoutingModule } from './shared-routing.module';
 import {HeaderComponent } from './components/header/header.component';
-import {ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -19,6 +19,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {UserListComponent } from './components/user-list/user-list.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { Dialog2Component } from './components/dialog2/dialog2.component';
+import { Dialog3Component } from './components/dialog3/dialog3.component';
 
 
 
@@ -26,7 +28,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
   declarations: [
     HeaderComponent,
     DialogComponent,
-    UserListComponent
+    UserListComponent,
+    Dialog2Component,
+    Dialog3Component
    
   ],
   imports: [
@@ -45,7 +49,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatPaginatorModule ,
     MatSortModule, 
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormsModule
   ],
   
   exports:[

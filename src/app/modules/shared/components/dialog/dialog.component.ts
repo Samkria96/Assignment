@@ -15,10 +15,10 @@ export class DialogComponent implements OnInit {
 
   images: any = [];
   actionBtn: string = 'Save'
-  imageSrc : any ;
-  myFiles:any = [];
-  updateOne:boolean = false;
-
+  imageSrc: any;
+  myFiles: any = [];
+  updateOne: boolean = false;
+  showTitle: string = 'Add Tasks'
   TodoTasksForm = this.fb.group({
     image: [''],
     title: [''],
@@ -30,36 +30,42 @@ export class DialogComponent implements OnInit {
     private fb: FormBuilder,
     private tasksService: UsertasksService,
     private matSnackBar: MatSnackBar,
-    private dialog : MatDialog,
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<UserListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    
-  ) { }
+
+  ) {
+    if (data) {
+      this.showTitle = data.type;
+      console.log(' this.showTitle', this.showTitle)
+    }
+  }
 
   baseImgUrl = environment.imageUrl;
 
   ngOnInit(): void {
-       console.log(this.data,"this.data")
-       if(this.data._id){
-         this.update()
-       }
+    console.log(this.data, "this.data")
+    if (this.data._id) {
+      console.log(this.data._id, 'this.data._id')
+      this.update()
+    }
   }
 
 
   createTodo() {
-    console.log(this.TodoTasksForm.value ,'this.TodoTasksForm.value')
+    console.log(this.TodoTasksForm.value, 'this.TodoTasksForm.value')
     let frmData = new FormData();
     frmData.append('title', this.TodoTasksForm.value.title);
     frmData.append('description', this.TodoTasksForm.value.description);
     frmData.append('targetDate', this.TodoTasksForm.value.targetDate);
     frmData.append('status', this.TodoTasksForm.value.status);
-       for (var i = 0; i < this?.myFiles?.length; i++) {
+    for (var i = 0; i < this?.myFiles?.length; i++) {
       frmData.append("image", this.myFiles[i]);
-    }  
+    }
     this.tasksService.createTodo(frmData).subscribe((data) => {
       console.log(data, 'Request Data');
-      console.log(frmData,'frmData')
-      if (data.status == 200) {        
+      console.log(frmData, 'frmData')
+      if (data.status == 200) {
         console.log("close modal");
         this.matSnackBar.open(
           'Added Tasks Successfully.',
@@ -68,36 +74,39 @@ export class DialogComponent implements OnInit {
             duration: 2500,
 
           }
-          
+
         );
         this.dialog.closeAll();
-        
+
       }
     },
       (err) => {
-        console.log(err);        
+        console.log(err);
       }
     );
-  }  
-  update(){
+  }
+  update() {
     this.actionBtn = 'Update'
     this.updateOne = true
     this.TodoTasksForm.patchValue({
-      title:this.data.title,
-      description:this.data.description,
-      targetDate:this.data.targetDate,
-      status:this.data.status,
-      image:this.data.image
+      title: this.data.title,
+      description: this.data.description,
+      targetDate: this.data.targetDate,
+      status: this.data.status,
+      //image: this.data.image
     })
   }
 
-  editTodo(){
-    this.tasksService.editTodo(this.TodoTasksForm.value,this.data._id).subscribe((data)=>{
-      console.log(data,'data')
+  editTodo() {
+    console.log("hello")
+    this.tasksService.editTodo(this.TodoTasksForm.value, this.data._id).subscribe((data) => {
+      console.log(data, 'data')
+    }, err => {
+      console.log(err)
     })
   }
 
-  
+
 
   openImagePopUp() {
     document.getElementById('uploadImageUrl')?.click();
@@ -108,8 +117,8 @@ export class DialogComponent implements OnInit {
     for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
-     if (e.target.files && e.target.files.length) {
-      console.log(e.target.files.length,'e.target.files.length')
+    if (e.target.files && e.target.files.length) {
+      console.log(e.target.files.length, 'e.target.files.length')
       this.myFiles.push(e.target.files);
       const [file] = e.target.files;
       reader.readAsDataURL(file);
@@ -117,7 +126,7 @@ export class DialogComponent implements OnInit {
       reader.onload = () => {
 
         this.imageSrc = reader.result as string;
-        console.log(this.imageSrc,'this.imageSrc')
+        console.log(this.imageSrc, 'this.imageSrc')
 
         this.TodoTasksForm.patchValue({
           fileSource: this.imageSrc
@@ -127,9 +136,8 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  deleteImage(index: any, img: any) {
-    console.log(this.images.length, 'this.images.length');    
-    this.images.splice( index,img);  
-    this.imageSrc = undefined; 
+  deleteImage(index: any, img: any) {      
+    this.images.splice(index, img);
+    this.imageSrc = undefined;   
   }
 }

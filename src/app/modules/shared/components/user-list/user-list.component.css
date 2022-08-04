@@ -32,5 +32,10 @@ table {
   ::ng-deep .mat-sort-header-container{
     font-size: 20px;
   }
+
+  .header {
+    float: right;
+    margin-top: 3rem;
+  }
   
   

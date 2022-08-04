@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
@@ -9,18 +9,11 @@ import { DialogComponent } from '../dialog/dialog.component';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(
-    public dialog: MatDialog
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  openDialog() {
-    this.dialog.open(DialogComponent, {
-     width:'auto',
-     height : 'auto'
-    });
-  }
+
 
 }
