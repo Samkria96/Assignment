@@ -19,7 +19,8 @@ export class UsertasksService {
   }
 
   todoListing(page: any, limit: any, search:any){
-    return this.httpService.get(`admin/todo/?page=${page}&limit=${limit}&search_text=${search}`)
+    return this.httpService.get(`admin/todo/?page=${page}&limit=${limit}&search_text
+    =${search}`)
   }
 
   editTodo(data :any ,_id:any){
