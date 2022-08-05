@@ -6,7 +6,7 @@ table {
     
     width: 100%;
     overflow: auto;    
-    height: 60vh;
+    height: 80vh;
   }
   
   .mat-form-field {
@@ -15,6 +15,7 @@ table {
   }
   .showimg{
     width: 140px;
+    height: 100px;
   }
   .container{
     max-width: 1500px;   
@@ -37,5 +38,5 @@ table {
     float: right;
     margin-top: 3rem;
   }
-  
-  
+   
+ 

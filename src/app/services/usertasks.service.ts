@@ -23,12 +23,13 @@ export class UsertasksService {
     =${search}`)
   }
 
-  editTodo(data :any ,_id:any){
-    return this.httpService.put(`admin/todo/${_id}`,data)
+  editTodo(data:any,_id:any){
+    return this.httpService.put(`admin/todo/${_id}`,data);
   }
 
-  viewTodo(_id:any , data :any ){
-    return this.httpService.get(`admin/todo/${_id}`,data)
+  viewTodo(_id:any ){
+    console.log(_id,"-----id-----")
+    return this.httpService.get(`admin/todo/${_id}`)
   }   
 
   deleteTodo(_id:any){

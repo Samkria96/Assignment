@@ -1,3 +1,12 @@
 button {
     margin-right: 8px;
   }
+
+  .mat-dialog-title{
+    font-size: 42px;
+    font-weight: 500px;
+  }
+  .mat-dialog-content{
+    margin-top: 45px;
+    font-size: 20px;
+  }

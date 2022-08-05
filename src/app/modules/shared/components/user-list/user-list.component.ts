@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild ,AfterViewInit ,inject} from '@angular/core';
+import { Component, OnInit , ViewChild ,AfterViewInit ,inject, TemplateRef} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -28,13 +28,14 @@ export class UserListComponent implements AfterViewInit , OnInit {
   showTitle : string = 'Add Tasks ' 
   $: any; 
   searchValue:any;
+  seeData : any   
+  Img: any = '';
 
   displayedColumns: string[] = ['image', 'title', 'description', 'target-date','status','action'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
- 
+  @ViewChild('openImage') openImage!: TemplateRef<any>;
 
   constructor(
     private dialog:MatDialog,
@@ -48,7 +49,7 @@ export class UserListComponent implements AfterViewInit , OnInit {
   baseImgUrl = environment.imageUrl;
 
   ngOnInit(): void {
-    this.todoListing(1, 10,'');
+    this.todoListing(1, 5,'');
   }
   ngAfterViewInit() { }
 
@@ -59,12 +60,12 @@ export class UserListComponent implements AfterViewInit , OnInit {
       });
 
       dialogRef.afterClosed().subscribe((res:any) => {
-        this.todoListing(1,10, '')
+        this.todoListing(1,5, '')
       })
   }
   
   todoListing(page: number, limit: number, search:string){
-    console.log('hello');
+    //console.log('hello');
     this.userTasksService.todoListing(page, limit, search).subscribe(
       (res: any) => {
         console.log(res, 'data');
@@ -85,45 +86,57 @@ export class UserListComponent implements AfterViewInit , OnInit {
     getPage(event: any) {
       console.log('event', event);
       this.p = event;
-      this.todoListing(1, 10, '');
+      this.todoListing(1, 5, '');
     }  
    
   
-  viewTodo(row:any ,id:any){
-    row.type='View Current Tasks'    
-    this.dialog.open(Dialog2Component,{
-      data:row 
+    viewData(id:any  ){ 
+      console.log(id , "get id ")     
+    if(id){   
+      this.dialog.open(Dialog2Component,{
+      width:'600px',
+      height: '600px',
+      data:id
    })
-  }
+    }
+}
 
   editTodo(row:any){
     row.type='Edit Tasks'
-    this.dialog.open(DialogComponent,{
+    const dialogRef = this.dialog.open(DialogComponent,{
     height: 'auto',
       width: 'auto',
       data:row
-  })
+  })  
   }
 
   searchtitle(e:any){
     console.log(e.target.value,'value...');
     this.searchValue = e.target.value;
-    this.todoListing(1, 10, this.searchValue)
+    this.todoListing(1, 5, this.searchValue)
   }
 
   deleteTasks(id:any){   
     if(id){    
       const dialogRef = this.dialog.open(Dialog3Component,{
-        height: 'auto',
-        width: 'auto',
+        height: '200px',
+        width: '400px',
         data:id
       })
 
-
       dialogRef.afterClosed().subscribe((res:any) => {
-        this.todoListing(1, 10,'');
+        this.todoListing(1, 5,'');
       })
     }
   }
+  viewImage(image:any){
+    console.log(image, 'image...');
+    this.Img = image;
+    this.dialog.open(this.openImage, {
+      height: 'auto',
+      width: 'auto',
+    });
+  }
+
   }
    

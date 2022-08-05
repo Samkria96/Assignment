@@ -1,0 +1,14 @@
+.example-card {
+    max-width: 400px;
+    margin-bottom: 8px;
+  }
+  .example-button-row button,
+  .example-button-row a {
+    height: 50px;
+    width: 100px;
+    margin-left: 387px;
+  }
+  .mat-dialog-title{
+    font-size: 42px;
+    font-weight: 500px;
+  }

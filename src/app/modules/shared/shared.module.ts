@@ -21,7 +21,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { Dialog2Component } from './components/dialog2/dialog2.component';
 import { Dialog3Component } from './components/dialog3/dialog3.component';
-
+import {MatCardModule} from '@angular/material/card';
 
 
 @NgModule({
@@ -50,7 +50,8 @@ import { Dialog3Component } from './components/dialog3/dialog3.component';
     MatSortModule, 
     MatTableModule,
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
+    MatCardModule
   ],
   
   exports:[

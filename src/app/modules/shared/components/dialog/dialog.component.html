@@ -14,22 +14,25 @@
         <img [src]="imageSrc" *ngIf="imageSrc"  >
         <mat-icon class="mat-icon-highlight_off" *ngIf="imageSrc" (click)="deleteImage(0,1)">highlight_off</mat-icon>
         <mat-icon *ngIf="!imageSrc"></mat-icon>
-    </div>
+      </div>     
       </div> 
       <div>
       <mat-form-field appearance="outline">
           <mat-label>Title of Task</mat-label>
-          <input matInput formControlName="title" placeholder="Task">       
+          <input matInput formControlName="title" placeholder="Task"> 
+          <mat-error *ngIf="hasError('title', 'required')">Title is required</mat-error>      
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Description</mat-label>
-          <input matInput formControlName="description" placeholder="Description">       
+          <input matInput formControlName="description" placeholder="Description">  
+          <mat-error *ngIf="hasError('description', 'required')">Description is required</mat-error>        
         </mat-form-field>      
         <mat-form-field appearance="outline">
           <mat-label>Choose a date</mat-label>
           <input matInput formControlName="targetDate" [matDatepicker]="picker">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-error *ngIf="hasError('targetDate', 'required')">Target-Date is required</mat-error>   
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="outline">
@@ -39,6 +42,7 @@
                <mat-option value="In-Progress">In-Progress</mat-option>
                <mat-option value="Done">Done</mat-option>
           </mat-select>
+          <mat-error *ngIf="hasError('status', 'required')">Status is required</mat-error>   
         </mat-form-field>
       </div>
    </form>
@@ -46,5 +50,5 @@
 <div mat-dialog-actions [align]="'end'">
    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
    <button *ngIf="!updateOne" mat-raised-button color="primary"  (click)="createTodo()" >{{actionBtn}}</button>
-   <button *ngIf="updateOne" mat-raised-button color="primary" (click)="editTodo()" >{{actionBtn}}</button>
+   <button *ngIf="updateOne" mat-raised-button color="primary"  (click)="editTask()" >{{actionBtn}}</button>
 </div>
