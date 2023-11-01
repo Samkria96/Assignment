@@ -23,7 +23,7 @@ export class Dialog2Component implements OnInit {
   ngOnInit(): void {
     console.log(this.data,'data...')
     this.viewId = this.data
-    this.viewData()
+    this.viewData()        
   }
   
   viewData(){

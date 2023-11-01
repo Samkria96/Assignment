@@ -15,7 +15,7 @@ export class DialogComponent implements OnInit {
    
   images: any = [];
   actionBtn: string = 'Save'
-  imageSrc: any;
+  imageSrc: any;         
   myFiles: any = [];
   updateOne: boolean = false;
   showTitle: string = 'Add Tasks'
