@@ -1,0 +1,62 @@
+pipeline {
+    environment {
+    registry = "assignment/assignment"
+    registryCredential = 'DockerHub_Auth'
+    dockerImage = 'assignment/assignment'
+    }
+
+    agent any
+    stages {
+            stage('Cloning our Git') {
+                steps {
+                git branch: 'main', credentialsId: 'GitHub_Auth', url: 'https://github.com/Samkria96/Assignment.git'
+                }
+            }
+
+            stage('Building Docker Image') {
+                steps {
+                    script {
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
+                }
+            }
+
+            stage('Deploying Docker Image to Dockerhub') {
+                steps {
+                    script {
+                        docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
+                        }
+                    }
+                }
+            }
+        
+           stage('Deploying Docker Image to pull on EC2') {
+                steps {
+                    script {
+                        docker.withRegistry('', registryCredential) {
+                        dockerImage.pull()
+                        }
+                    }
+                }
+            }
+
+           stage('Docker run on server') {
+                steps {
+                    script {
+                        sshagent(['Server_Auth']) {
+                            sh "docker stop resturant-dev"
+                            sh "docker rm resturant-dev"
+                            sh "docker run -d -p 4200:80 --name resturant-dev  tabcode/tabcode:${env.BUILD_NUMBER}"
+                        }
+                    }
+                }
+            }    
+            
+               //stage('Cleaning Up') {
+                //steps{
+                  //sh "docker rmi --force $registry:$BUILD_NUMBER"
+                //}
+            //}
+        }
+    }
